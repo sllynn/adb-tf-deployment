@@ -10,3 +10,4 @@ The key components are:
 2. A *shared* resource group containing an Azure Data Lake Storage account which can be accessed by the Databricks workspace using Microsoft's PrivateLink service. More shared services can be added here and accessed in the same way (e.g. a shared SQL DB instance). 
 3. A project- or business unit-specific resource group (*spoke*) containing the Databricks workspace and configured with routes back to the firewall and out to the UK South control plane, together with the firewall rules required for access to the Databricks file system. Azure Active Directory resources (e.g. groups and service principals) could also be add to this module to configure access to the Databricks workspace and to resources in the *shared* resource group.
 
+To create a new analytics environment within your subscription, add a  

@@ -6,9 +6,3 @@ workspace_vnet_cidr       = "10.179.0.0/16"
 private_subnet_cidr       = "10.179.1.0/24"
 public_subnet_cidr        = "10.179.2.0/24"
 privatelink_subnet_cidr   = "10.179.3.0/24"
-credentials = {
-  subscription_id = "00000000-0000-0000-0000-000000000000"
-  client_id       = "00000000-0000-0000-0000-000000000000"
-  tenant_id       = "00000000-0000-0000-0000-000000000000"
-  client_secret   = "00000000-0000-0000-0000-000000000000"
-}
