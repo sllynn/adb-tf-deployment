@@ -10,12 +10,6 @@ variable "owner" {
   description = "Owner email to append to resource group"
 }
 
-# environment
-variable "environment" {
-  type = string
-  description = "This variable defines the environment to be built"
-}
-
 # azure region
 variable "location" {
   type = string

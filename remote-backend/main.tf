@@ -1,3 +1,9 @@
+provider "azurerm" {
+  # whilst the `version` attribute is optional, we recommend pinning to a given version of the Provider
+  version = "=2.0.0"
+  features {}
+}
+
 # Generate a random storage name
 resource "random_string" "tf-name" {
   length = 8
@@ -16,7 +22,6 @@ resource "azurerm_resource_group" "state-rg" {
     prevent_destroy = true
   }
   tags = {
-    environment = var.environment
     Owner = var.owner
   }
 }
