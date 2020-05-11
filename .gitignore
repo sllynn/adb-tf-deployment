@@ -1,4 +1,4 @@
-terraform.tfvars.old
+terraform.tfvars
 terraform.tfstate*
 .idea/
 .terraform/
