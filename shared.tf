@@ -12,5 +12,7 @@ resource "azurerm_storage_account" "shared_datalake" {
   resource_group_name = azurerm_resource_group.shared_rg.name
   account_replication_type = "GRS"
   account_tier = "Standard"
+  account_kind = "StorageV2"
+  is_hns_enabled = "true"
   location = azurerm_resource_group.shared_rg.location
 }
