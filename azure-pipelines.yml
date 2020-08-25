@@ -7,23 +7,42 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'vs2017-win2016'
 
 steps:
 - task: CopyFiles@2
   inputs:
     Contents: '**'
-    TargetFolder: '$(build.artifactstagingdirectory)/Terraform'
-- task: PublishBuildArtifacts@1
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/Terraform'
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
+  displayName: 'Use Terraform 0.12.24'
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
-
-# - script: echo Hello, world!
-#   displayName: 'Run a one-line script'
-
-# - script: |
-#     echo Add other tasks to build, test, and deploy your project.
-#     echo See https://aka.ms/yaml
-#   displayName: 'Run a multi-line script'
+    terraformVersion: 0.12.24
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+  displayName: 'terraform init'
+  inputs:
+    command: init
+    workingDirectory: '$(Build.ArtifactStagingDirectory)/Terraform'
+    backendType: azurerm
+    backendServiceArm: 'stuart-sp-connection'
+    backendAzureRmResourceGroupName: 'rg_stuart_tf'
+    backendAzureRmStorageAccountName: stuarttfplkzgaaq
+    backendAzureRmContainerName: 'core-tfstate'
+    backendAzureRmKey: terraform.tfstate
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+  displayName: 'terraform validate'
+  inputs:
+    command: validate
+    workingDirectory: '$(Build.ArtifactStagingDirectory)/Terraform'
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+  displayName: 'terraform plan'
+  inputs:
+    command: plan
+    workingDirectory: '$(Build.ArtifactStagingDirectory)/Terraform'
+    environmentServiceName: 'stuart-sp-connection'
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+  displayName: 'terraform apply'
+  inputs:
+    command: apply
+    workingDirectory: '$(Build.ArtifactStagingDirectory)/Terraform'
+    environmentServiceName: 'stuart-sp-connection'
